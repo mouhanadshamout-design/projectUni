@@ -65,11 +65,11 @@ QuantityAvilable-=value;}
             it.Category = data[2];
             it.Price = Integer.parseInt(data[3]);
             it.QuantityAvilable = Integer.parseInt(data[4]);
-            it.minimum = Integer.parseInt(data[5]);
+            it.minimum = Integer.parseInt(data[5]); 
             return it;
         } else
             return null;
-    }
+    }   
 
 //     ArrayList<Item> itemsList = new ArrayList<>();
 //     Scanner in = new Scanner(System.in);
@@ -157,7 +157,7 @@ QuantityAvilable-=value;}
 
 //         }
 //         cakhkhktch(Exception e){
-//             System.out.print(e.toString());
+//             System.out.print(e.toStllllring());
 //         }
 //     }
 }
