@@ -8,42 +8,115 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Item {
-    static int IdItem = 0;
+
+    static int NextId = 1;
+
+    int IdItem  ;
     String Name;
     String Category;
     int Price;
     int QuantityAvilable;
     int minimum;
-//Constructer 1
-    public Item() {}
-//Constructer 2
-    public Item(int id, String Name, String Category, int Price, int QuantityAvilable, int minimum) {
-        this.IdItem = id;
+
+    // Constructer 1________________________________________________________________________________________
+    public Item() {
+    }
+
+    // Constructer 2
+    public Item( String Name, String Category, int Price, int QuantityAvilable, int minimum) {
+        this.IdItem = NextId++;
         this.Name = Name;
         this.Category = Category;
         this.Price = Price;
         this.QuantityAvilable = QuantityAvilable;
         this.minimum = minimum;
     }
-    //check of Quantity
-    public boolean isBelowMinimum()
-    {
-        return QuantityAvilable > minimum;
+
+    //Getter__________________________________________________________________________________________
+    public int getId() {
+        return this.IdItem;
     }
-    //Add Quantity
-        void AddQuantity(int value) 
-        {
-        this.QuantityAvilable += value;
+    
+    public String getName() {
+        return this.Name;
     }
-    //Remove Quantity
-    public void RemoveQuantity(int value){
-        try{
- if(QuantityAvilable<value)
-QuantityAvilable-=value;}
- catch(Exception e){
-    System.out.print(e);
- }
+    
+    public String getCategory() {
+        return this.Category;
     }
+    
+    public double getPrice() {
+        return this.Price;
+    }
+    
+    public int getQuantity() {
+        return this.QuantityAvilable;
+    }
+    
+    public int getMinQuantity() {
+        return this.minimum;
+    }
+    
+    //  Setters __________________________________________________________________________________
+    public void setName(String name) {
+        if (name != null && !name.trim().isEmpty()) {
+            this.Name = name;
+        }
+    }
+    
+    public void setCategory(String category) {
+        if (category != null && !category.trim().isEmpty()) {
+            this.Category = category;
+        }
+    }
+
+    // public void setPrice(double price) {
+    //     if (price >= 0) {
+    //         this.Price = price;
+    //     }
+    // }
+    
+    public void setQuantity(int quantity) {
+        if (quantity >= 0) {
+            this.QuantityAvilable= quantity;
+        }
+    }
+    
+    public void setMinQuantity(int minQuantity) {
+        if (minQuantity >= 0) {
+            this.minimum = minQuantity;
+        }
+    }
+
+    // check of Quantity
+    public boolean isBelowMinimum() {
+        return this.QuantityAvilable < minimum;
+    }
+    //check if the QuantityAvilable is zero 
+        public boolean isOutOfStock() {
+        return this.QuantityAvilable == 0;
+    }
+    //_________________________________________________________________________________________
+    // Add Quantity
+    void AddQuantity(int amount) {
+        if (amount > 0)
+            QuantityAvilable += amount;
+    }
+
+    // Reduce Quantity
+    public boolean reduceQuantity(int amount) {
+        if (amount > 0 && QuantityAvilable >= amount) {
+                QuantityAvilable -= amount;
+            return true;
+        }
+        return false;
+    }
+
+    // get Total Value
+        public double getTotalValue() {
+        return this.QuantityAvilable * this.Price;
+    }
+
     // convert Item To String
     String ConvertToString(Item item) {
         String word = "";
@@ -55,7 +128,8 @@ QuantityAvilable-=value;}
         word += Integer.toString(item.minimum);
         return word;
     }
-      // ReadItems for convert String to Item
+
+    // ReadItems for convert String to Item
     Item convertToItem(String line) {
         String[] data = line.split(",");
         if (data.length == 6) {
@@ -65,99 +139,96 @@ QuantityAvilable-=value;}
             it.Category = data[2];
             it.Price = Integer.parseInt(data[3]);
             it.QuantityAvilable = Integer.parseInt(data[4]);
-            it.minimum = Integer.parseInt(data[5]); 
+            it.minimum = Integer.parseInt(data[5]);
             return it;
         } else
             return null;
-    }   
+    }
 
-//     ArrayList<Item> itemsList = new ArrayList<>();
-//     Scanner in = new Scanner(System.in);
+    // ArrayList<Item> itemsList = new ArrayList<>();
+    // Scanner in = new Scanner(System.in);
 
-//     void AddQuantity(int value) {
-//         this.QuantityAvilable += value;
-//     }
+    // void AddQuantity(int value) {
+    // this.QuantityAvilable += value;
+    // }
 
-//     File file = new File("Item.txt");
+    // File file = new File("Item.txt");
 
-//     // Write File for Write on file
-//     void WriteFile(String text) {
-//         try {
-//             // File file = new File("Item.txt");
-//             FileWriter writer = new FileWriter(file, true);
-//             writer.write(text);
-//             writer.flush();
-//             writer.close();
+    // // Write File for Write on file
+    // void WriteFile(String text) {
+    // try {
+    // // File file = new File("Item.txt");
+    // FileWriter writer = new FileWriter(file, true);
+    // writer.write(text);
+    // writer.flush();
+    // writer.close();
 
-//         } catch (IOException e) {
-//             System.out.print(e.toString());
+    // } catch (IOException e) {
+    // System.out.print(e.toString());
 
-//         }
-//     }
+    // }
+    // }
 
-//     // ArrayList<Item> listItem=new ArrayList<>();
+    // // ArrayList<Item> listItem=new ArrayList<>();
 
-//     // Read Item
-//     Item ReadItemInfo() {
+    // // Read Item
+    // Item ReadItemInfo() {
 
-//         Item it = new Item();
-//         it.IdItem += 1;
-//         it.Name = in.next();
-//         it.Category = in.next();
-//         it.Price = in.nextInt();
-//         it.QuantityAvilable = in.nextInt();
-//         it.minimum = in.nextInt();
-//         return it;
-//     }
+    // Item it = new Item();
+    // it.IdItem += 1;
+    // it.Name = in.next();
+    // it.Category = in.next();
+    // it.Price = in.nextInt();
+    // it.QuantityAvilable = in.nextInt();
+    // it.minimum = in.nextInt();
+    // return it;
+    // }
 
+    // public
 
+    // // Add Item
+    // void AddItem(Item item) {
+    // item = ReadItemInfo();
+    // itemsList.add(item);
+    // WriteFile(ConvertToString(item));
 
-//     public
+    // }
 
+    // static void PrintItem(Item item) {
 
-//     // Add Item
-//     void AddItem(Item item) {
-//         item = ReadItemInfo();
-//         itemsList.add(item);
-//         WriteFile(ConvertToString(item));
+    // System.out.printf("%-15d", item.IdItem);
+    // System.out.printf("%-30s", item.Name);
+    // System.out.printf("%-30s", item.Category);
+    // System.out.printf("%-10d", item.Price);
+    // System.out.printf("%-20d", item.QuantityAvilable);
+    // System.out.printf("%-5d", item.minimum);
+    // System.out.println();
+    // }
+    // static void PrintItems(ArrayList<Item>items){
+    // System.out.printf("%-15s","ID Item |");
+    // System.out.printf("%-30s","Name |");
+    // System.out.printf("%-30s","Category |");
+    // System.out.printf("%-10s","Price |");
+    // System.out.printf("%-20s","Quantity Avilable |");
+    // System.out.printf("%-5s","Minimum |");
+    // System.out.println();
+    // for(Item i:items){
+    // PrintItem(i);
 
-//     }
+    // }
+    // }
+    // void PrintFromFile(){
+    // try{
+    // FileReader Readf=new FileReader(file);
+    // BufferedReader Bfr=new BufferedReader(Readf);
+    // String line;
+    // while((line=Bfr.readLine())!=null){
+    // PrintItem(convertToItem(line));
+    // }
 
-//    static void PrintItem(Item item) {
-
-//         System.out.printf("%-15d", item.IdItem);
-//         System.out.printf("%-30s", item.Name);
-//         System.out.printf("%-30s", item.Category);
-//         System.out.printf("%-10d", item.Price);
-//         System.out.printf("%-20d", item.QuantityAvilable);
-//         System.out.printf("%-5d", item.minimum);
-//         System.out.println();
-//     }
-//      static void PrintItems(ArrayList<Item>items){
-// System.out.printf("%-15s","ID Item |");
-// System.out.printf("%-30s","Name |");
-// System.out.printf("%-30s","Category |");
-// System.out.printf("%-10s","Price |");
-// System.out.printf("%-20s","Quantity Avilable |");
-// System.out.printf("%-5s","Minimum |");
-// System.out.println();
-// for(Item i:items){
-// PrintItem(i);
-
-// }
-//     }
-//     void PrintFromFile(){
-//         try{
-//   FileReader Readf=new FileReader(file);
-//     BufferedReader Bfr=new BufferedReader(Readf);
-//     String line;
-//     while((line=Bfr.readLine())!=null){
-//         PrintItem(convertToItem(line));
-//     } 
-
-//         }
-//         cakhkhktch(Exception e){
-//             System.out.print(e.toStllllring());
-//         }
-//     }
+    // }
+    // cakhkhktch(Exception e){
+    // System.out.print(e.toStllllring());
+    // }
+    // }
 }
